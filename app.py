@@ -632,5 +632,4 @@ def service():
                                link2="",
                                link3="")
 if __name__ == "__main__":
-    initialize_camera()
     app.run(host='0.0.0.0', port=5000, debug=False)
