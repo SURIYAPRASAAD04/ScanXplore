@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>ScanXplore</title>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='icon.png') }}">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+
+    <style>
+        .footer {
+    background:  url("{{ url_for('static', filename='footer.png') }}") center center no-repeat;
+    background-size: contain;
+}
+
+.footer .btn.btn-social {
+    margin-right: 5px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--light);
+    border: 1px solid rgba(256, 256, 256, .1);
+    border-radius: 40px;
+    transition: .3s;
+}
+
+.footer .btn.btn-social:hover {
+    color: var(--primary);
+}
+
+.footer .btn.btn-link {
+    display: block;
+    margin-bottom: 10px;
+    padding: 0;
+    text-align: left;
+    color: var(--light);
+    font-weight: normal;
+    transition: .3s;
+}
+
+.footer .btn.btn-link::before {
+    position: relative;
+    content: "\f105";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    margin-right: 10px;
+}
+
+.footer .btn.btn-link:hover {
+    letter-spacing: 1px;
+    box-shadow: none;
+}
+
+.footer .copyright {
+    padding: 25px 0;
+    font-size: 14px;
+    border-top: 1px solid rgba(256, 256, 256, .1);
+}
+
+.footer .copyright a {
+    color: var(--light);
+}
+
+.footer .footer-menu a {
+    margin-right: 15px;
+    padding-right: 15px;
+    border-right: 1px solid rgba(255, 255, 255, .1);
+}
+
+.footer .footer-menu a:last-child {
+    margin-right: 0;
+    padding-right: 0;
+    border-right: none;
+}
+        .hero-header {
+            background:
+                url("{{ url_for('static', filename='bg-dot.png') }}"),
+                url("{{ url_for('static', filename='bg-dot.png') }}"),
+                url("{{ url_for('static', filename='bg-round.png') }}"),
+                url("{{ url_for('static', filename='bg-tree.png') }}"),
+                url("{{ url_for('static', filename='bg-bottom-hero.png') }}");
+            background-position:
+                10px 10px,
+                bottom 190px right 10px,
+                left 55% top -1px,
+                left 45% bottom -1px,
+                center bottom -1px;
+            background-repeat: no-repeat;
+        }
+        #video-container { margin-top: 20px;}
+        #loader {
+                display: none;
+                border: 8px solid #ffc220;
+                border-radius: 50%;
+                border-top: 8px solid #0071ce;
+                width: 60px;
+                height: 60px;
+                -webkit-animation: spin 2s linear infinite;
+                animation: spin 2s linear infinite;
+                margin: 20px auto;
+            }
+
+            @-webkit-keyframes spin {
+                0% { -webkit-transform: rotate(0deg); }
+                100% { -webkit-transform: rotate(360deg); }
+            }
+
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+    </style>
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"> 
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='animate.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='lightbox.min.css') }}">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+
+    <!-- Template Stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="container-xxl bg-white p-0">
+        <!-- Spinner Start -->
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-grow text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <!-- Spinner End -->
+
+
+        <!-- Navbar & Hero Start -->
+        <div class="container-xxl position-relative p-0">
+            <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
+                <a href="" class="navbar-brand p-0">
+                    <h1 class="m-0"><i style="color: #ffc220;" class="fa fa-search me-2"></i><span class="fs-2">Scan</span><span style="color: #ffc220;">Xplore</h1>
+                   
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="fa fa-bars"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto py-0">
+                        <a href="/" class="nav-item nav-link active">Scan</a>
+                        <a href="/project" class="nav-item nav-link">History</a>
+                        <a href="contact.html" class="nav-item nav-link">About</a>
+                    </div>
+                    <butaton type="button" class="btn text-secondary ms-3" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fa fa-search"></i></butaton>
+                    </div>
+            </nav>
+
+            <div class="container-xxl py-5 bg-primary hero-header mb-5">
+                <div class="container my-5 py-5 px-lg-5">
+                    <div class="row g-5">
+                        <div class="col-lg-6 text-center text-lg-start">
+                            <div id="loader"></div>
+                            <div class="row g-2" id="video-container">
+                                <img id="video"  src="" alt="Video Feed" style="height: 500px; width: 900px; display: none; border-radius: 10%;
+                                object-fit: cover;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+                            </div>
+                            <div class="py-5">
+                            <h1 class="text-white mb-4 animated zoomIn">Enhance your shopping experience with <span class="fs-2">Scan</span><span style="color: #ffc220;">Xplore</h1>
+                            <p class="text-white pb-3 animated zoomIn">Whether you're in-store or shopping online, simply scan any product to instantly access reviews, ratings, pricing, availability, and brand insights. The AI chatbot is ready to answer your questions, providing a seamless and personalized shopping experience wherever you are.</p>
+                            <button onclick="startCamera()" class="btn btn-light py-sm-3 px-sm-5 rounded-pill me-3 animated slideInLeft">Open Cam</button>
+                          
+                        </div>      
+                        </div>
+                        <div class="col-lg-6 text-center text-lg-start">
+                            <img class="img-fluid" src="{{ url_for('static', filename='hero.png') }}" alt="">
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <!-- Navbar & Hero End -->
+        <div id="loader"></div>
+                            <div id="video-container">
+                                <img id="video" src="" alt="Video Feed" style="display: none;">
+                            </div>
+        
+
+        <!-- Footer Start -->
+        <div class="container-fluid bg-primary text-light footer mt-5 pt-5 wow fadeIn" data-wow-delay="0.1s">
+            <div class="container py-5 px-lg-5">
+            <div class="container px-lg-5">
+                <div class="copyright">
+                    <div class="row">
+                        <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                            &copy; <a class="border-bottom" href="#">ScanXplore</a>, All Right Reserved. 
+							
+							
+							Designed By <a class="border-bottom" href="">Team Nexus Innovators</a>
+                        </div>
+                        <div class="col-md-6 text-center text-md-end">
+                            <div class="footer-menu">
+                                <a href="">Home</a>
+                                <a href="">Cookies</a>
+                                <a href="">Help</a>
+                                <a href="">FQAs</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer End -->
+
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top pt-2"><i class="bi bi-arrow-up"></i></a>
+    </div>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='wow.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='easing.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='waypoints.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='owl.carousel.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='isotope.pkgd.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='lightbox.min.js') }}"></script>
+
+    <!-- Template Javascript -->
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+    <script>
+    function startCamera() {
+    document.getElementById('loader').style.display = 'block';
+    fetch('/start_camera')
+        .then(response => response.json())
+        .then(data => {
+            console.log(data.status);
+            setTimeout(() => {
+                document.getElementById('video').src = '/video_feed';
+                document.getElementById('video').style.display = 'block';
+                document.getElementById('loader').style.display = 'none';
+                checkDetection(); // Check for detection continuously
+            }, 1000);  // Delay to ensure the camera is ready
+        });
+}
+
+function checkDetection() {
+    fetch('/detect')
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === "success") {
+                    alert(data.alert);
+                    window.location.href = data.redirect_url;  // Redirect to the service page
+                } else {
+                setTimeout(checkDetection, 3000); // Check again after 3 seconds if no detection
+            }
+        });
+}
+    </script>
+</body>
+
+</html>
